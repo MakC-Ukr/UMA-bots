@@ -1,7 +1,8 @@
 {
-  "name": "forta-agent-starter",
+  "name": "across-protocol-bot",
   "version": "0.0.1",
-  "description": "Forta Agent Typescript starter project",
+  "description": "Forta bot that detects certain events related to the Across Protocol",
+  "repository": "https://github.com/MakC-Ukr/UMA-bots",
   "chainIds": [
     1
   ],
@@ -21,7 +22,8 @@
     "disable": "forta-agent disable",
     "enable": "forta-agent enable",
     "keyfile": "forta-agent keyfile",
-    "test": "jest"
+    "test": "jest",
+    "format": "prettier --write \"src/**/*.ts\""
   },
   "dependencies": {
     "forta-agent": "^0.1.9"
