@@ -7,7 +7,7 @@ import {
   FindingSeverity,
   FindingType,
 } from "forta-agent";
-import { DISPUTE_EVENT, HUBPOOL_ADDRESS } from "./constants"
+import { DISPUTE_EVENT, HUBPOOL_ADDRESS } from "./constants";
 
 export function provideHandleTransaction(
   disputeEvent: string,
@@ -16,17 +16,14 @@ export function provideHandleTransaction(
   const findings: Finding[] = [];
 
   return async (txEvent: TransactionEvent) => {
-    const disputeEventTxns = txEvent.filterLog(
-      disputeEvent,
-      hubPoolAddress
-    );
+    const disputeEventTxns = txEvent.filterLog(disputeEvent, hubPoolAddress);
 
     disputeEventTxns.forEach((disputeActualEvent) => {
       const { disputer, requestTime } = disputeActualEvent.args;
       findings.push(
         Finding.fromObject({
           name: "Across v2 Dispute",
-          description: `The current proposed root bundle disputed on Hubpool`,
+          description: `The current proposed root bundle was disputed on Hubpool`,
           alertId: "UMA-DISP",
           severity: FindingSeverity.Medium,
           type: FindingType.Suspicious,
@@ -43,9 +40,6 @@ export function provideHandleTransaction(
 }
 
 export default {
-  handleTransaction: provideHandleTransaction(
-    DISPUTE_EVENT,
-    HUBPOOL_ADDRESS
-  ),
+  handleTransaction: provideHandleTransaction(DISPUTE_EVENT, HUBPOOL_ADDRESS),
   // handleBlock
 };
