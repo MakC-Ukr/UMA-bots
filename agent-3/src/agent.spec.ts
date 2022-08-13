@@ -4,42 +4,45 @@ import {
   Finding,
   HandleTransaction,
   createTransactionEvent,
-  ethers,
+  TransactionEvent,
 } from "forta-agent";
+import { TestTransactionEvent } from "forta-agent-tools/lib/test";
 import { DISPUTE_EVENT, HUBPOOL_ADDRESS } from "./constants";
 import agent from "./agent";
 
+const RANDOM_ADDRESS = "0x0000000000000000000000000000000000000012";
+const RANDOM_ADDRESS_2 = "0x0000000000000000000000000000000000000068";
+
 describe("Root Bundle Disputed agent", () => {
   let handleTransaction: HandleTransaction;
-  const mockTxEvent = createTransactionEvent({} as any);
 
   beforeAll(() => {
     handleTransaction = agent.handleTransaction;
   });
 
   it("returns empty findings if there is no dispute", async () => {
-    mockTxEvent.filterLog = jest.fn().mockReturnValue([]);
-
-    const findings = await handleTransaction(mockTxEvent);
-
-    expect(findings).toStrictEqual([]);
-    expect(mockTxEvent.filterLog).toHaveBeenCalledTimes(1);
-    expect(mockTxEvent.filterLog).toHaveBeenCalledWith(
-      DISPUTE_EVENT,
+    const txEvent: TransactionEvent = new TestTransactionEvent().setFrom(
       HUBPOOL_ADDRESS
     );
+    const findings = await handleTransaction(txEvent);
+    expect(findings).toStrictEqual([]);
+  });
+
+  it("doesn't return a finding if there a dispute is made from the wrong address", async () => {
+    const txEvent: TransactionEvent = new TestTransactionEvent()
+      .setFrom(RANDOM_ADDRESS)
+      .addEventLog(DISPUTE_EVENT, RANDOM_ADDRESS, [RANDOM_ADDRESS, "0x123"]);
+
+    const findings = await handleTransaction(txEvent);
+    expect(findings).toStrictEqual([]);
   });
 
   it("returns a finding if there a dispute is made on a relevant contract address", async () => {
-    const mockDisputeEvent = {
-      args: {
-        disputer: "0xdef",
-        requestTime: "0x123",
-      },
-    };
-    mockTxEvent.filterLog = jest.fn().mockReturnValue([mockDisputeEvent]);
+    const txEvent: TransactionEvent = new TestTransactionEvent()
+      .setFrom(HUBPOOL_ADDRESS)
+      .addEventLog(DISPUTE_EVENT, HUBPOOL_ADDRESS, [RANDOM_ADDRESS, "0x123"]);
 
-    const findings = await handleTransaction(mockTxEvent);
+    const findings = await handleTransaction(txEvent);
     expect(findings).toStrictEqual([
       Finding.fromObject({
         name: "Across v2 Dispute",
@@ -49,15 +52,10 @@ describe("Root Bundle Disputed agent", () => {
         type: FindingType.Suspicious,
         protocol: "Across v2",
         metadata: {
-          disputer: "0xdef",
-          requestTime: "0x123",
+          disputer: RANDOM_ADDRESS,
+          requestTime: "291", // decimal representation of 0x123
         },
       }),
     ]);
-    expect(mockTxEvent.filterLog).toHaveBeenCalledTimes(1);
-    expect(mockTxEvent.filterLog).toHaveBeenCalledWith(
-      DISPUTE_EVENT,
-      HUBPOOL_ADDRESS
-    );
   });
 });

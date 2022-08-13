@@ -14,12 +14,12 @@ export function provideHandleTransaction(
   hubPoolAddress: string
 ): HandleTransaction {
   const findings: Finding[] = [];
-
   return async (txEvent: TransactionEvent) => {
     const disputeEventTxns = txEvent.filterLog(disputeEvent, hubPoolAddress);
 
     disputeEventTxns.forEach((disputeActualEvent) => {
       const { disputer, requestTime } = disputeActualEvent.args;
+
       findings.push(
         Finding.fromObject({
           name: "Across v2 Dispute",
