@@ -1,8 +1,8 @@
 {
   "name": "across-dispute-bot",
   "version": "0.0.1",
-  "description": "Forta bot that detects certain events related to the Across Protocol",
-  "repository": "https://github.com/MakC-Ukr/UMA-bots",
+  "description": "Forta bot that detects disputes raised for proposed RootBundles on Across v2's HubPool address",
+  "repository": "https://github.com/MakC-Ukr/UMA-bots/tree/master/agent-3",
   "chainIds": [
     1
   ],
