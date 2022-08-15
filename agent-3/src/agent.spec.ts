@@ -3,7 +3,6 @@ import {
   FindingSeverity,
   Finding,
   HandleTransaction,
-  createTransactionEvent,
   TransactionEvent,
 } from "forta-agent";
 import { TestTransactionEvent } from "forta-agent-tools/lib/test";
@@ -11,7 +10,6 @@ import { DISPUTE_EVENT, HUBPOOL_ADDRESS } from "./constants";
 import agent from "./agent";
 
 const RANDOM_ADDRESS = "0x0000000000000000000000000000000000000012";
-const RANDOM_ADDRESS_2 = "0x0000000000000000000000000000000000000068";
 
 describe("Root Bundle Disputed agent", () => {
   let handleTransaction: HandleTransaction;

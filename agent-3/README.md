@@ -4,7 +4,6 @@
 
 This bot detects disputes of relays on the receiving chains for the  [Across v2 Protocol](https://across.to/) - a multichain bridge which uses [UMA](https://umaproject.org/) as its source of on-chain data and validation. For more details refer [here](https://discourse.umaproject.org/t/forta-monitors-across-v2-request-for-proposals/1569).
 
-
 ## Supported Chains
 - Mainnet
   
@@ -20,5 +19,3 @@ This bot detects disputes of relays on the receiving chains for the  [Across v2 
   
 ## Test Data
 Txn:
-- 0x43828aac2fdcc17445bafc75992a4eb5c856b0babe87b69b08f4e53bb6c0db9c
-- 0x2a65c46484b7e7ef3a2d96852dee5db14e580ba074eeaa52718d1eaa572af621

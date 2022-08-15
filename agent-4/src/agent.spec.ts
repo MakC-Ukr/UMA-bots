@@ -3,7 +3,6 @@ import {
   FindingSeverity,
   Finding,
   HandleTransaction,
-  createTransactionEvent,
   TransactionEvent,
 } from "forta-agent";
 import { TestTransactionEvent } from "forta-agent-tools/lib/test";
