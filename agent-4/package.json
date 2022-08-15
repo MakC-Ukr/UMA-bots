@@ -1,7 +1,8 @@
 {
-  "name": "forta-agent-starter",
+  "name": "across-reimb-bot",
   "version": "0.0.1",
-  "description": "Forta Agent Typescript starter project",
+  "description": "Forta bot that detects transfer of funds for relayer reimbursement on Across v2's HubPool address",
+  "repository": "https://github.com/MakC-Ukr/UMA-bots/tree/master/agent-3",
   "chainIds": [
     1
   ],
