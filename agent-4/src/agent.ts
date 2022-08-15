@@ -40,7 +40,8 @@ export function provideHandleTransaction(
             l2Token: l2Token.toString(),
             amount: amount.toString(),
             to: to.toString(),
-            chainName: adapterToChainName[to as keyof typeof adapterToChainName]
+            chainName:
+              adapterToChainName[to as keyof typeof adapterToChainName],
           },
         })
       );

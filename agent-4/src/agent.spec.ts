@@ -33,15 +33,23 @@ describe("Root Bundle Disputed agent", () => {
   it("returns empty findings if there a reimbursement is made from the wrong address", async () => {
     const txEvent: TransactionEvent = new TestTransactionEvent()
       .setFrom(RANDOM_ADDRESS)
-      .addEventLog(REIMBURSEMENT_EVENT, RANDOM_ADDRESS, [RANDOM_ADDRESS, RANDOM_ADDRESS_2, "0x123", RANDOM_ADDRESS_3]);
+      .addEventLog(REIMBURSEMENT_EVENT, RANDOM_ADDRESS, [
+        RANDOM_ADDRESS,
+        RANDOM_ADDRESS_2,
+        "0x123",
+        RANDOM_ADDRESS_3,
+      ]);
 
     const findings = await handleTransaction(txEvent);
     expect(findings).toStrictEqual([]);
   });
 
   it("returns a finding if a reimbursement is made on a relevant contract address", async () => {
-    const txEvent: TransactionEvent = new TestTransactionEvent()
-      .addEventLog(REIMBURSEMENT_EVENT, HUBPOOL_ADDRESS, [RANDOM_ADDRESS, RANDOM_ADDRESS_2, "0x1A4", ARBITRUM_SPOKE_POOL]);
+    const txEvent: TransactionEvent = new TestTransactionEvent().addEventLog(
+      REIMBURSEMENT_EVENT,
+      HUBPOOL_ADDRESS,
+      [RANDOM_ADDRESS, RANDOM_ADDRESS_2, "0x1A4", ARBITRUM_SPOKE_POOL]
+    );
 
     const findings = await handleTransaction(txEvent);
     expect(findings).toStrictEqual([
@@ -57,9 +65,9 @@ describe("Root Bundle Disputed agent", () => {
           l2Token: RANDOM_ADDRESS_2,
           amount: "420",
           to: ARBITRUM_SPOKE_POOL,
-          chainName: "Arbitrum"
+          chainName: "Arbitrum",
         },
-    }),
+      }),
     ]);
   });
 });
